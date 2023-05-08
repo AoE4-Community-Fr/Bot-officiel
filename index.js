@@ -3,7 +3,7 @@ const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits, ChannelType } = require('discord.js');
 const { token } = require('./config.json');
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds], disableEveryone: False });
+const client = new Client({ intents: [GatewayIntentBits.Guilds], disableEveryone: false });
 
 client.commands = new Collection();
 const foldersPath = path.join(__dirname, 'commands');
@@ -48,11 +48,12 @@ client.on(Events.InteractionCreate, async interaction => {
 
 client.on('threadCreate', post => {
     
-    const ForumBO_Id = "1105065775703785623";
+    const ForumBO_Id = "1080894013550366730";
     if (post.parentId === ForumBO_Id && post.type === ChannelType.PublicThread)
     {
-        const AnnounceChannel = client.channels.cache.get('1084514373038522428');
-        AnnounceChannel.send("||@everyone||\n<@" + post.ownerId + "> vient de publier le build order : \n" + post.name + " dans <#" + post.parentId + ">");
+        const AnnounceChannel = client.channels.cache.get('1080504576328880151');
+        AnnounceChannel.send("||@everyone||\nOyé, oyé, bande de troubadours assoiffés de BO. <@" + post.ownerId + "> vient de nous sortir un nouveau breuvage baptisé ***" + post.name + 
+                                "***, servez-vous dans vos auges et abreuvez-vous de ce savoir : <#" + post.id + ">")
     }
 })
 
