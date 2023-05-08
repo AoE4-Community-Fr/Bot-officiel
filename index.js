@@ -3,7 +3,7 @@ const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits, ChannelType } = require('discord.js');
 const { token } = require('./config.json');
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds], disableEveryone: False });
 
 client.commands = new Collection();
 const foldersPath = path.join(__dirname, 'commands');
@@ -52,7 +52,7 @@ client.on('threadCreate', post => {
     if (post.parentId === ForumBO_Id && post.type === ChannelType.PublicThread)
     {
         const AnnounceChannel = client.channels.cache.get('1084514373038522428');
-        AnnounceChannel.send("<@" + post.ownerId + "> vient de publier le build order : \n" + post.name + " dans <#" + post.parentId + ">");
+        AnnounceChannel.send("||@everyone||\n<@" + post.ownerId + "> vient de publier le build order : \n" + post.name + " dans <#" + post.parentId + ">");
     }
 })
 
