@@ -1,6 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits, ChannelType } = require('discord.js');
+const { ModalBuilder, TextInputBuilder } = require('discord.js');
 const { token } = require('./config.json');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds], disableEveryone: false });
@@ -44,6 +45,37 @@ client.on(Events.InteractionCreate, async interaction => {
 			await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 		}
 	}
+
+	if (!interaction.isModalSubmit()) return;
+	    console.log(interaction);
+
+	if (interaction.commandName === 'message') {
+		const modal = new ModalBuilder()
+			.setCustomId('Modal')
+			.setTitle('Nouveau message');
+
+            const message = TextInputBuilder()
+                .setCustomId('classicMessage')
+                .setLabel("Rediger un message classic")
+                .setStyle(TextInputStyle.Paragraph);
+
+            const embededMessage = new TextInputBuilder()
+                .setCustomId('embededMessage')
+                .setLabel("Rediger à la suite un message formaté")
+                // Paragraph means multiple lines of text.
+                .setStyle(TextInputStyle.Paragraph);
+
+            const firstActionRow = new ActionRowBuilder().addComponents(message);
+            const secondActionRow = new ActionRowBuilder().addComponents(embededMessage);
+        
+            // Add inputs to the modal
+            modal.addComponents(firstActionRow, secondActionRow);
+        
+            // Show the modal to the user
+            await interaction.showModal(modal);
+
+		// TODO: Add components to modal...
+	}
 });
 
 client.on('threadCreate', post => {
@@ -53,8 +85,9 @@ client.on('threadCreate', post => {
 	const AnnounceChannel_Id = "1080504576328880151";
     if (post.parentId === ForumBO_Id && post.type === ChannelType.PublicThread)
     {
+		const NotifBO_Id = "1110631444432306288";
         const AnnounceChannel = client.channels.cache.get(AnnounceChannel_Id);
-        AnnounceChannel.send("||@everyone||\nOyé, oyé, bande de troubadours assoiffés de BO. <@" + post.ownerId + "> vient de nous sortir un nouveau breuvage baptisé ***" + post.name + 
+        AnnounceChannel.send("||<@" + NotifBO_Id + ">||\nOyé, oyé, bande de troubadours assoiffés de BO. <@" + post.ownerId + "> vient de nous sortir un nouveau breuvage baptisé ***" + post.name + 
                                 "***, servez-vous dans vos auges et abreuvez-vous de ce savoir : <#" + post.id + ">")
     }
 	else if (post.parentId === ForumCommu_Id && post.type === ChannelType.PublicThread)
@@ -63,6 +96,7 @@ client.on('threadCreate', post => {
         AnnounceChannel.send("La communauté vient de poster un nouveau thread intitulé <#" + post.id + "> dans <#" + post.parentId + "> hésite pas à aller voir et à donner ton avis !")
 	}
 })
+
 
 client.on("ready", () => {
     console.log("bot operatrionnel");  
