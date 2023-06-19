@@ -1,7 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits, ChannelType } = require('discord.js');
-const { ModalBuilder, TextInputBuilder } = require('discord.js');
 const { token } = require('./config.json');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds], disableEveryone: false });
@@ -40,42 +39,13 @@ client.on(Events.InteractionCreate, async interaction => {
 	} catch (error) {
 		console.error(error);
 		if (interaction.replied || interaction.deferred) {
-			await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
+			await interaction.followUp({ content: 'Une erreur s\'est produite lors de l\'exécution de cette commande !', ephemeral: true });
 		} else {
-			await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+			await interaction.reply({ content: 'Une erreur s\'est produite lors de l\'exécution de cette commande !', ephemeral: true });
 		}
 	}
 
-	if (!interaction.isModalSubmit()) return;
-	    console.log(interaction);
 
-	if (interaction.commandName === 'message') {
-		const modal = new ModalBuilder()
-			.setCustomId('Modal')
-			.setTitle('Nouveau message');
-
-            const message = TextInputBuilder()
-                .setCustomId('classicMessage')
-                .setLabel("Rediger un message classic")
-                .setStyle(TextInputStyle.Paragraph);
-
-            const embededMessage = new TextInputBuilder()
-                .setCustomId('embededMessage')
-                .setLabel("Rediger à la suite un message formaté")
-                // Paragraph means multiple lines of text.
-                .setStyle(TextInputStyle.Paragraph);
-
-            const firstActionRow = new ActionRowBuilder().addComponents(message);
-            const secondActionRow = new ActionRowBuilder().addComponents(embededMessage);
-        
-            // Add inputs to the modal
-            modal.addComponents(firstActionRow, secondActionRow);
-        
-            // Show the modal to the user
-            await interaction.showModal(modal);
-
-		// TODO: Add components to modal...
-	}
 });
 
 client.on('threadCreate', post => {
