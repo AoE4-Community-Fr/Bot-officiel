@@ -2,10 +2,9 @@ const { SlashCommandBuilder, ChannelType, PermissionFlagsBits, CommandInteractio
 
 module.exports = {
         data: new SlashCommandBuilder()
-                .setName('message')
-                .setDescription('Envoyer un message avec le bot')
+                .setName('embed_message')
+                .setDescription('Envoyer un message formatté')
                 .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
-
 };
 
 
