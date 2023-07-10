@@ -171,11 +171,6 @@ client.on('threadCreate', post => {
 	}
 	else if (post.parentId === ForumCommu_Id && post.type === ChannelType.PublicThread) {
 		const AnnounceChannel = client.channels.cache.get(AnnounceChannel_Id);
-		AnnounceChannel.send("||<@" + NotifBO_Id + ">||\nOyé, oyé, bande de troubadours assoiffés de BO. <@" + post.ownerId + "> vient de nous sortir un nouveau breuvage baptisé ***" + post.name +
-		"***, servez-vous dans vos auges et abreuvez-vous de ce savoir : <#" + post.id + ">")
-	}
-	else if (post.parentId === ForumCommu_Id && post.type === ChannelType.PublicThread) {
-		const AnnounceChannel = client.channels.cache.get(AnnounceChannel_Id);
 		AnnounceChannel.send("La communauté vient de poster un nouveau thread intitulé <#" + post.id + "> dans <#" + post.parentId + "> hésite pas à aller voir et à donner ton avis !")
 	}
 })
