@@ -133,17 +133,20 @@ client.on(Events.InteractionCreate, async interaction => {
 				// 	icon = authorIcon;
 				// }
 				
-				const title = interaction.fields.getTextInputValue('embededMessageTitle');
-				const message = interaction.fields.getTextInputValue('embededMessage');
-				const image = interaction.fields.getTextInputValue('image');
-				
-				
-				const embed = new EmbedBuilder()
-				.setColor(0x7a7ae0)
-				.setDescription(message)
-				
-				if (Author !== '') {
-					embed.setAuthor({ name: Author, iconURL: icon })
+			const title = interaction.fields.getTextInputValue('embededMessageTitle');
+			const message = interaction.fields.getTextInputValue('embededMessage');
+			const image = interaction.fields.getTextInputValue('image');
+			
+			
+			const embed = new EmbedBuilder()
+			.setColor(0x7a7ae0)
+			.setDescription(message)
+			
+			if (Author !== '' && icon !== '') {
+				embed.setAuthor({ name: Author, iconURL: icon })
+			}
+			else if (Author !== '') {
+				embed.setAuthor({ name: Author})
 			}
 			if (image !== '') {
 				embed.setImage(image)
