@@ -1,4 +1,6 @@
 {
+  "name": "bot-discord-aoe4",
+  "version": "1.0",
   "dependencies": {
     "discord.js": "^14.11.0"
   }
