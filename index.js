@@ -3,6 +3,7 @@ const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits, ChannelType, InteractionType } = require('discord.js');
 const { ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, EmbedBuilder } = require('discord.js');
 const { token } = require('./config.json');
+const { ForumBO_Id, ForumCommu_Id, AnnounceChannel_Id } = require('./discord-AoE4.json')
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds], disableEveryone: false });
 
@@ -159,17 +160,8 @@ client.on(Events.InteractionCreate, async interaction => {
 });
 
 client.on('threadCreate', post => {
-	
-	const ForumBO_Id = "1080894013550366730";
-	const ForumCommu_Id = "1081740810195832852";
-	const AnnounceChannel_Id = "1080504576328880151";
 	if (post.parentId === ForumBO_Id && post.type === ChannelType.PublicThread) {
-		const NotifBO_Id = "1110631444432306288";
-		const AnnounceChannel = client.channels.cache.get(AnnounceChannel_Id);
-		AnnounceChannel.send("||<@" + NotifBO_Id + ">||\nOyé, oyé, bande de troubadours assoiffés de BO. <@" + post.ownerId + "> vient de nous sortir un nouveau breuvage baptisé ***" + post.name +
-		"***, servez-vous dans vos auges et abreuvez-vous de ce savoir : <#" + post.id + ">")
-	}
-	else if (post.parentId === ForumCommu_Id && post.type === ChannelType.PublicThread) {
+		const NotifBO_Id = "&1110631444432306288";
 		const AnnounceChannel = client.channels.cache.get(AnnounceChannel_Id);
 		AnnounceChannel.send("||<@" + NotifBO_Id + ">||\nOyé, oyé, bande de troubadours assoiffés de BO. <@" + post.ownerId + "> vient de nous sortir un nouveau breuvage baptisé ***" + post.name +
 		"***, servez-vous dans vos auges et abreuvez-vous de ce savoir : <#" + post.id + ">")
