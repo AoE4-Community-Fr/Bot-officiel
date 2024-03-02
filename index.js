@@ -4,7 +4,7 @@ const { Client, Collection, Events, GatewayIntentBits, ChannelType, InteractionT
 const { ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, EmbedBuilder } = require('discord.js');
 const { token } = require('./config.json');
 const { ForumBO_Id, ForumCommu_Id, AnnounceChannel_Id } = require('./discord-AoE4.json')
-import {replaceNitroEmoji} from './modules/replaceEmoji.mjs';
+const {replaceNitroEmoji} = require('./modules/replaceEmoji.js');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds], disableEveryone: false });
 
