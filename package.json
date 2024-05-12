@@ -1,8 +1,13 @@
 {
   "name": "bot-discord-aoe4",
-  "version": "1.0",
+  "version": "1.1",
   "dependencies": {
-    "discord.js": "^14.11.0"
+    "discord.js": "^14.14.1"
   },
-  "type": "commonjs"
+  "type": "commonjs",
+  "scripts": {
+    "test": "y!help",
+    "start": "node index.js"
+  }
 }
+
