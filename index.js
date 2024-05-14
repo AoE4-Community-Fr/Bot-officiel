@@ -2,11 +2,19 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits, ChannelType, InteractionType } = require('discord.js');
 const { ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, EmbedBuilder } = require('discord.js');
-const { token } = require('./config.json');
-const { ForumBO_Id, ForumCommu_Id, AnnounceChannel_Id } = require('./discord-AoE4.json')
+const { token, clientId } = require('./config.json');
+const { ForumBO_Id, ForumCommu_Id, AnnounceChannel_Id, YT_FR_ID, YT_GB_ID } = require('./discord-AoE4.json')
 const {replaceNitroEmoji} = require('./modules/replaceEmoji.js');
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds], disableEveryone: false });
+const client = new Client({
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildMembers,
+	],
+	disableEveryone: false
+});
 
 client.commands = new Collection();
 const foldersPath = path.join(__dirname, 'commands');
@@ -190,11 +198,28 @@ client.on('threadCreate', post => {
 		const AnnounceChannel = client.channels.cache.get(AnnounceChannel_Id);
 		AnnounceChannel.send("La communauté vient de poster un nouveau thread intitulé <#" + post.id + "> dans <#" + post.parentId + "> hésite pas à aller voir et à donner ton avis !")
 	}
-})
+});
 
+client.on('messageCreate', msg => {
+	if (msg.author.id !== clientId.toString())
+	{
+		if (msg.channelId === YT_FR_ID) {
+			const content = msg.content;
+			const notif_id = "&1109463939055632405";
+			msg.channel.send("<@" + notif_id + ">\n" + content);
+			msg.delete();
+		}
+		else if (msg.channelId === YT_GB_ID) {
+			const content = msg.content;
+			const notif_id = "&1109464303578402877";
+			msg.channel.send("<@" + notif_id + ">\n" + content);
+			msg.delete();
+		}
+	}
+});
 
 client.on("ready", () => {
 	console.log("bot operatrionnel");
-})
+});
 
 client.login(token);
